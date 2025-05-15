@@ -2323,7 +2323,7 @@ function handleVideoFiles(files) {
     // テキスト６
     textPresetButtonB6.addEventListener('click', () => {
         console.log('テキストプリセットボタンがクリックされました');
-        textColor2 = "rgb(19, 188, 0)";
+        textColor2 = "rgb(10, 145, 0)";
         edgeWidth2 = 10;
         edgeColor2 = "rgb(255, 255, 255)";
         outerEdgeWidth2 = 15;        
@@ -3000,3 +3000,62 @@ function handleVideoFiles(files) {
     }
     // JavaScript コード (ここまで)
 })();
+
+
+
+
+
+
+// ログイン認証用のユーザー名とパスワード（ここでは例として固定値を使用）
+const validUsername = "aftereffects";
+const validPassword = "youtube";
+
+// ログイン画面の要素を取得
+const loginContainer = document.getElementById("login-container");
+const appContainer = document.getElementById("app-container");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const loginButton = document.getElementById("login-button");
+const errorMessage = document.getElementById("error-message");
+
+// ログイン状態をチェック
+function checkLoginStatus() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+        showApp();
+    } else {
+        showLogin();
+    }
+}
+
+// ログイン画面を表示
+function showLogin() {
+    loginContainer.style.display = "block";
+    appContainer.style.display = "none";
+}
+
+// アプリ画面を表示
+function showApp() {
+    loginContainer.style.display = "none";
+    appContainer.style.display = "block";
+}
+
+// ログインボタンのクリックイベント
+loginButton.addEventListener("click", () => {
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+
+    // 認証処理
+    if (username === validUsername && password === validPassword) {
+        // 認証成功
+        errorMessage.textContent = "";
+        localStorage.setItem("isLoggedIn", "true"); // ログイン状態を保存
+        showApp();
+    } else {
+        // 認証失敗
+        errorMessage.textContent = "ユーザー名またはパスワードが間違っています。";
+    }
+});
+
+// ページ読み込み時にログイン状態をチェック
+checkLoginStatus();
