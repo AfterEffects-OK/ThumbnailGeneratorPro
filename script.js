@@ -44,6 +44,7 @@
     const textXInput2 = document.getElementById('textX2'); // 2つ目のテキストのX座標
     const textYInput1 = document.getElementById('textY1'); // 1つ目のテキストのY座標
     const textYInput2 = document.getElementById('textY2'); // 2つ目のテキストのY座標
+    const textScaleXInput1 = document.getElementById('textScaleX1'); // 【追加】文字幅スライダー要素の取得
     const ctx = thumbnailCanvas.getContext('2d');
     const colorButtons1 = document.querySelectorAll('.color-button1'); // 1つ目のテキストの色選択ボタン
     const colorButtons2 = document.querySelectorAll('.color-button2'); // 2つ目のテキストの色選択ボタン
@@ -1252,6 +1253,13 @@ function handleVideoFiles(files) {
         }
         redrawCanvas(); // ここでredrawCanvas()を呼び出す
     });
+
+    // 文字幅スライダー変更時の処理
+    if (textScaleXInput1) {
+        textScaleXInput1.addEventListener('input', (e) => {
+            redrawCanvas();
+        });
+    }
 
     // フォントサイズ変更時の処理
     fontSizeInput1.addEventListener('input', (e) => {
@@ -2636,6 +2644,9 @@ function handleVideoFiles(files) {
         ctx.translate(textX1, textY1);
         // テキストを回転
         ctx.rotate(textRotation1 * Math.PI / 180);
+        // 【ここに追加】文字幅（X方向）のスケールを適用
+        const scaleX1 = (parseFloat(textScaleXInput1 ? textScaleXInput1.value : 100)) / 100;
+        ctx.scale(scaleX1, 1);
         textLines1.forEach((line, index) => {
             ctx.fillText(line, 0, index * lineHeight1);
         });
