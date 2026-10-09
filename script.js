@@ -2638,14 +2638,16 @@ function handleVideoFiles(files) {
         ctx.shadowOffsetX = shadowOffsetX1;
         ctx.shadowOffsetY = shadowOffsetY1;
         
+        // 共通の文字幅倍率を計算
+        const scaleX1 = (parseFloat(textScaleXInput1 ? textScaleXInput1.value : 100)) / 100;
+
         // テキスト1のシャドウを描画（テキストと同じ色で描画）
         ctx.fillStyle = shadowColor1; // シャドウの色で塗りつぶす
         // 回転の中心を設定
         ctx.translate(textX1, textY1);
         // テキストを回転
         ctx.rotate(textRotation1 * Math.PI / 180);
-        // 【ここに追加】文字幅（X方向）のスケールを適用
-        const scaleX1 = (parseFloat(textScaleXInput1 ? textScaleXInput1.value : 100)) / 100;
+        // 【1】シャドウに文字幅スケールを適用
         ctx.scale(scaleX1, 1);
         textLines1.forEach((line, index) => {
             ctx.fillText(line, 0, index * lineHeight1);
@@ -2667,6 +2669,8 @@ function handleVideoFiles(files) {
             ctx.translate(textX1, textY1);
             // テキストを回転
             ctx.rotate(textRotation1 * Math.PI / 180);
+            // 【2】外側エッジに文字幅スケールを適用
+            ctx.scale(scaleX1, 1);
             textLines1.forEach((line, index) => {
                 ctx.strokeText(line, 0, index * lineHeight1);
             });
@@ -2687,6 +2691,8 @@ function handleVideoFiles(files) {
             ctx.translate(textX1, textY1);
             // テキストを回転
             ctx.rotate(textRotation1 * Math.PI / 180);
+            // 【3】内側エッジに文字幅スケールを適用
+            ctx.scale(scaleX1, 1);
             textLines1.forEach((line, index) => {
                 ctx.strokeText(line, 0, index * lineHeight1);
             });
@@ -2698,6 +2704,8 @@ function handleVideoFiles(files) {
         ctx.translate(textX1, textY1);
         // テキストを回転
         ctx.rotate(textRotation1 * Math.PI / 180);
+        // 【4】テキスト本体に文字幅スケールを適用
+        ctx.scale(scaleX1, 1);
         textLines1.forEach((line, index) => {
             ctx.fillText(line, 0, index * lineHeight1);
         });
